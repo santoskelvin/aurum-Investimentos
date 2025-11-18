@@ -140,7 +140,7 @@ section:first-of-type {
   border-top: none;
 }
 
-section.hero {
+section.hero-wrapper {
   padding: 0;
   border-top: none;
 }
@@ -166,92 +166,123 @@ section.hero {
    6. HERO
    ============================================ */
 
-.hero {
+.hero-wrapper {
   position: relative;
-  min-height: 70vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  background-color: #0C1F1A;
   overflow: hidden;
   padding: 0;
 }
 
-.hero-bg {
+.hero-bg-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: contrast(0.9) brightness(0.5);
-}
-
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.2));
+  background: linear-gradient(135deg, rgba(12, 31, 26, 0.95) 0%, rgba(12, 31, 26, 0.85) 100%);
   z-index: 1;
 }
 
-.hero-content {
+.hero-accent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 600px;
+  height: 600px;
+  opacity: 0.7;
+  z-index: 0;
+  pointer-events: none;
+  transform: translate(20%, -20%);
+}
+
+.hero-container {
   position: relative;
   z-index: 2;
-  text-align: center;
-  padding-top: var(--space-lg);
-  padding-bottom: var(--space-lg);
-  color: var(--color-light);
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 80px;
 }
 
-.hero-title {
-  font-size: 3rem;
-  /* 48px */
+.hero-content {
+  max-width: 700px;
+  padding: 120px 0;
+}
+
+.hero-headline {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 4.5rem;
   font-weight: 700;
-  margin-bottom: 2rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--color-light);
-  letter-spacing: -0.02em;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
   line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
 }
 
-.hero-sub {
+.hero-subheadline {
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 1.25rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 1.5rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
   line-height: 1.6;
-}
-
-.hero-tagline {
-  font-size: 1.1rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 3rem;
-  color: var(--color-light);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
 }
 
-.hero-ctas {
+.hero-cta {
+  display: inline-block;
+  padding: 18px 40px;
+  background-color: #D4A85F;
+  color: #0C1F1A;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 4rem;
+}
+
+.hero-cta:hover {
+  background-color: #C2984F;
+  transform: translateY(-2px);
+}
+
+.hero-trust-bar {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.trust-value {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #D4A85F;
+}
+
+.trust-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.trust-divider {
+  width: 1px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* ============================================
@@ -590,41 +621,289 @@ section.hero {
   line-height: 1.4;
 }
 
-/* Gráficos de Rentabilidade */
-.charts-section {
-  background-color: var(--color-light);
+/* ============================================
+   GRÁFICOS DE RENTABILIDADE (NOVA VERSÃO)
+   ============================================ */
+
+/* Tokens CSS customizáveis */
+:root {
+  --aurum-amber: #B7791F;
+  --aurum-dark: #072E28;
+  --aurum-green-start: #1F7A3A;
+  --aurum-green-end: #34D399;
+  --aurum-card-dark: rgba(15, 23, 42, 0.6);
+  --aurum-card-light: #F5F7FA;
+  --aurum-text-light: rgba(255, 255, 255, 0.9);
+  --aurum-text-muted: rgba(255, 255, 255, 0.6);
 }
 
-.charts-grid {
+.rentabilidade-section {
+  background-color: var(--aurum-dark);
+  padding: var(--space-xl) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.rentabilidade-section .section-title {
+  color: var(--aurum-text-light);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.rentabilidade-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
-  max-width: 1000px;
+  gap: 2rem;
+  max-width: 1400px;
   margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Tablet: 2 colunas */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .rentabilidade-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chart-card-highlight {
+    grid-column: 1 / -1;
+  }
 }
 
 .chart-card {
-  background: #FFFFFF;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+  background: var(--aurum-card-dark);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.chart-card h4 {
-  font-size: 1.25rem;
+.chart-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(183, 121, 31, 0.05) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.chart-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.chart-card-highlight {
+  background: var(--aurum-card-light);
+  border: 1px solid var(--aurum-amber);
+  transform: scale(1.03);
+}
+
+.chart-card-highlight::before {
+  background: linear-gradient(135deg, rgba(183, 121, 31, 0.1) 0%, transparent 100%);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.strategy-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--aurum-text-muted);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.chart-card-highlight .strategy-label {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.kpi-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.kpi-value {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--aurum-text-light);
+  font-family: 'Playfair Display', 'Merriweather', serif;
+  line-height: 1.2;
+}
+
+.chart-card-highlight .kpi-value {
+  color: var(--aurum-dark);
+}
+
+.kpi-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-dark);
-  margin: 0;
-  text-align: center;
+  color: var(--aurum-amber);
+  background: rgba(183, 121, 31, 0.15);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.kpi-badge-highlight {
+  background: rgba(183, 121, 31, 0.2);
+}
+
+.chart-container {
+  position: relative;
+  margin: 1rem 0;
+  min-height: 280px;
 }
 
 .bar-chart {
   width: 100%;
-  height: 160px;
+  height: 280px;
   display: block;
+}
+
+.chart-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chart-card-highlight .chart-footer {
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.axis-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--aurum-text-muted);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.chart-card-highlight .axis-ticks {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.carousel-controls {
+  display: none;
+}
+
+.carousel-prev,
+.carousel-next {
+  background: var(--aurum-amber);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+  background: #9a6519;
+  transform: scale(1.1);
+}
+
+.carousel-indicators {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.carousel-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-indicator.active {
+  background: var(--aurum-amber);
+  transform: scale(1.2);
+}
+
+.chart-tooltip {
+  position: absolute;
+  background: rgba(7, 46, 40, 0.95);
+  backdrop-filter: blur(8px);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.chart-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chart-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(7, 46, 40, 0.95);
+}
+
+.chart-tooltip-year {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.chart-tooltip-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--aurum-amber);
+  margin-bottom: 0.25rem;
+}
+
+.chart-tooltip-percent {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Acessibilidade: reduzir animações */
+@media (prefers-reduced-motion: reduce) {
+
+  .chart-card,
+  .chart-tooltip,
+  .bar-chart rect {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 /* Para quem é a AURUM */
@@ -864,41 +1143,49 @@ section.hero {
     /* Mobile: reduzido */
   }
 
-  .hero {
-    min-height: 50vh;
+  .hero-wrapper {
+    min-height: 100vh;
   }
 
-  .hero-bg img {
-    object-fit: cover;
-    object-position: center;
+  .hero-container {
+    padding: 0 24px;
   }
 
   .hero-content {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
+    padding: 80px 0;
   }
 
-  .hero-title {
-    font-size: 2rem;
-    /* Mobile: reduzido */
-    max-width: 90%;
-    margin-bottom: 1.5rem;
-  }
-
-  .hero-sub {
-    font-size: 1.1rem;
-    max-width: 90%;
+  .hero-headline {
+    font-size: 2.5rem;
     margin-bottom: 1.25rem;
   }
 
-  .hero-tagline {
-    margin-bottom: 2rem;
+  .hero-subheadline {
+    font-size: 1.125rem;
+    margin-bottom: 2.5rem;
   }
 
-  .hero-ctas {
-    flex-direction: column;
+  .hero-cta {
     width: 100%;
-    max-width: 400px;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .hero-trust-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+  }
+
+  .trust-divider {
+    display: none;
+  }
+
+  .hero-accent {
+    width: 400px;
+    height: 400px;
+    transform: translate(30%, -30%);
   }
 
   .btn {
@@ -999,17 +1286,53 @@ section.hero {
     padding: 20px 24px;
   }
 
-  .charts-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
+  .rentabilidade-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 1.5rem;
+    padding: 0 1rem;
+    scrollbar-width: none;
+  }
+
+  .rentabilidade-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rentabilidade-grid .chart-card {
+    min-width: 90%;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+
+  .chart-card-highlight {
+    transform: none;
+  }
+
+  .carousel-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
   }
 
   .chart-card {
-    padding: 16px;
+    padding: 1.25rem;
   }
 
-  .chart-card h4 {
-    font-size: 1.1rem;
+  .kpi-value {
+    font-size: 1.5rem;
+  }
+
+  .chart-container {
+    min-height: 240px;
+  }
+
+  .bar-chart {
+    height: 240px;
   }
 
   .cta-title {

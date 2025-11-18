@@ -46,20 +46,30 @@
 
 <body>
   <!-- Hero -->
-  <section id="hero" class="hero fade-in">
-    <div class="hero-bg">
-      <img src="assets/img/hero-placeholder.webp" alt="Imagem decorativa - hero" loading="lazy" role="img"
-        aria-hidden="true">
-      <div class="hero-overlay"></div>
-    </div>
-    <div class="container hero-content">
-      <h1 class="hero-title">Transforme sua forma de investir com a AURUM Investimento</h1>
-      <p class="hero-sub">Soluções inteligentes, seguras e personalizadas para acelerar seus resultados no mercado
-        financeiro.</p>
-      <p class="hero-tagline">Consultoria. Estratégia. Crescimento real.</p>
-      <div class="hero-ctas">
-        <a class="btn btn-primary" href="#contato">Quero investir melhor</a>
-        <a class="btn btn-outline" href="#contato">Falar com um especialista</a>
+  <section id="hero" class="hero-wrapper">
+    <div class="hero-bg-overlay"></div>
+    <img src="/hero-accent.svg" alt="" class="hero-accent" aria-hidden="true">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1 class="hero-headline">Invista com segurança em imóveis de alto padrão</h1>
+        <p class="hero-subheadline">Retornos consistentes, gestão profissional e ativos selecionados com rigor.</p>
+        <a href="#contato" class="hero-cta">Simular Investimento</a>
+        <div class="hero-trust-bar">
+          <div class="trust-item">
+            <span class="trust-value">+120</span>
+            <span class="trust-label">investidores ativos</span>
+          </div>
+          <div class="trust-divider"></div>
+          <div class="trust-item">
+            <span class="trust-value">14,7% a.a</span>
+            <span class="trust-label">Retorno médio projetado</span>
+          </div>
+          <div class="trust-divider"></div>
+          <div class="trust-item">
+            <span class="trust-value">✓</span>
+            <span class="trust-label">Ativos auditados e com garantia real</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -189,25 +199,133 @@
   </section>
 
   <!-- Gráficos de Rentabilidade -->
-  <section class="charts-section fade-up">
+  <section class="rentabilidade-section fade-up" role="region" aria-labelledby="rentabilidade-title">
     <div class="container">
-      <h2 class="section-title">Rentabilidade por Estratégia</h2>
-      <div class="charts-grid">
-        <div class="chart-card">
-          <h4>Renda Fixa</h4>
-          <svg class="bar-chart" width="100%" height="160" viewBox="0 0 300 160"
-            preserveAspectRatio="xMidYMid meet"></svg>
+      <h2 id="rentabilidade-title" class="section-title">Rentabilidade por Estratégia</h2>
+
+      <div class="rentabilidade-grid" id="rentabilidade-container">
+        <!-- Card: Renda Fixa -->
+        <div class="chart-card chart-card-dark" data-strategy="renda-fixa">
+          <div class="card-header">
+            <span class="strategy-label">Renda Fixa — 1% a.m</span>
+            <div class="kpi-summary">
+              <span class="kpi-value">R$ 1.944.000</span>
+              <span class="kpi-badge">
+                <svg class="arrow-icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M6 2L10 6L6 10M10 6H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                +620%
+              </span>
+            </div>
+          </div>
+
+          <div class="chart-container" role="img" aria-label="Renda fixa — crescimento para R$ 1.944.000 em 20 anos">
+            <svg class="bar-chart" width="100%" height="280" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"
+              id="chart-renda-fixa">
+              <!-- Gráfico será renderizado via JS -->
+            </svg>
+            <div class="chart-fallback" style="display: none;">
+              <img src="assets/thumbnail-renda-fixa.webp" alt="Gráfico Renda Fixa" loading="lazy">
+            </div>
+          </div>
+
+          <div class="chart-footer">
+            <div class="axis-ticks">
+              <span>Aplic.</span>
+              <span>5 anos</span>
+              <span>10 anos</span>
+              <span>15 anos</span>
+              <span>20 anos</span>
+            </div>
+          </div>
         </div>
-        <div class="chart-card">
-          <h4>Alavancagem</h4>
-          <svg class="bar-chart" width="100%" height="160" viewBox="0 0 300 160"
-            preserveAspectRatio="xMidYMid meet"></svg>
+
+        <!-- Card: Alavancagem (DESTAQUE - Card Central) -->
+        <div class="chart-card chart-card-highlight" data-strategy="alavancagem">
+          <div class="card-header">
+            <span class="strategy-label">Alavancagem — 3% a.m</span>
+            <div class="kpi-summary">
+              <span class="kpi-value">R$ 5.800.000</span>
+              <span class="kpi-badge kpi-badge-highlight">
+                <svg class="arrow-icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M6 2L10 6L6 10M10 6H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                +2.048%
+              </span>
+            </div>
+          </div>
+
+          <div class="chart-container" role="img" aria-label="Alavancagem — crescimento para R$ 5.800.000 em 20 anos">
+            <svg class="bar-chart" width="100%" height="280" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"
+              id="chart-alavancagem">
+              <!-- Gráfico será renderizado via JS -->
+            </svg>
+            <div class="chart-fallback" style="display: none;">
+              <img src="assets/thumbnail-alavancagem.webp" alt="Gráfico Alavancagem" loading="lazy">
+            </div>
+          </div>
+
+          <div class="chart-footer">
+            <div class="axis-ticks">
+              <span>Aplic.</span>
+              <span>5 anos</span>
+              <span>10 anos</span>
+              <span>15 anos</span>
+              <span>20 anos</span>
+            </div>
+          </div>
         </div>
-        <div class="chart-card">
-          <h4>Ações</h4>
-          <svg class="bar-chart" width="100%" height="160" viewBox="0 0 300 160"
-            preserveAspectRatio="xMidYMid meet"></svg>
+
+        <!-- Card: Ações -->
+        <div class="chart-card chart-card-dark" data-strategy="acoes">
+          <div class="card-header">
+            <span class="strategy-label">Ações — 1.5% a.m</span>
+            <div class="kpi-summary">
+              <span class="kpi-value">R$ 3.720.000</span>
+              <span class="kpi-badge">
+                <svg class="arrow-icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M6 2L10 6L6 10M10 6H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                +1.495%
+              </span>
+            </div>
+          </div>
+
+          <div class="chart-container" role="img" aria-label="Ações — crescimento para R$ 3.720.000 em 20 anos">
+            <svg class="bar-chart" width="100%" height="280" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"
+              id="chart-acoes">
+              <!-- Gráfico será renderizado via JS -->
+            </svg>
+            <div class="chart-fallback" style="display: none;">
+              <img src="assets/thumbnail-acoes.webp" alt="Gráfico Ações" loading="lazy">
+            </div>
+          </div>
+
+          <div class="chart-footer">
+            <div class="axis-ticks">
+              <span>Aplic.</span>
+              <span>5 anos</span>
+              <span>10 anos</span>
+              <span>15 anos</span>
+              <span>20 anos</span>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Carousel Controls (Mobile) -->
+      <div class="carousel-controls" aria-hidden="true">
+        <button class="carousel-prev" aria-label="Estratégia anterior">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M12 4L8 10L12 16M8 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="carousel-indicators"></div>
+        <button class="carousel-next" aria-label="Próxima estratégia">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M8 4L12 10L8 16M12 10H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
       </div>
     </div>
   </section>
@@ -288,6 +406,7 @@
 
   <!-- Scripts principais -->
   <script src="assets/js/script.js"></script>
+  <script src="assets/js/rentabilidade.js"></script>
 
   <!-- Widget de Métricas -->
   <script>
