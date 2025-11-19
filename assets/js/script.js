@@ -64,11 +64,11 @@ function initFadeInObserver() {
 }
 
 // ============================================
-// HEADER BEHAVIOR
+// HEADER BEHAVIOR (Sticky + Shrink)
 // ============================================
 
 function initHeaderBehavior() {
-  const header = qs('header');
+  const header = qs('.site-header');
   
   if (!header) {
     return;
@@ -101,6 +101,53 @@ function initHeaderBehavior() {
 }
 
 // ============================================
+// MOBILE NAVIGATION TOGGLE
+// ============================================
+
+function initMobileNav() {
+  const navToggle = qs('.nav-toggle');
+  const mainNav = qs('.main-nav');
+  
+  if (!navToggle || !mainNav) {
+    return;
+  }
+  
+  navToggle.addEventListener('click', () => {
+    const isOpen = mainNav.classList.contains('open');
+    
+    if (isOpen) {
+      mainNav.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Abrir menu');
+    } else {
+      mainNav.classList.add('open');
+      navToggle.setAttribute('aria-expanded', 'true');
+      navToggle.setAttribute('aria-label', 'Fechar menu');
+    }
+  });
+  
+  // Fechar menu ao clicar em um link
+  const navLinks = qsa('.nav-list a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Abrir menu');
+    });
+  });
+  
+  // Fechar menu ao pressionar ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mainNav.classList.contains('open')) {
+      mainNav.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Abrir menu');
+      navToggle.focus();
+    }
+  });
+}
+
+// ============================================
 // INIT FUNCTION
 // ============================================
 
@@ -108,6 +155,7 @@ function init() {
   initSmoothScroll();
   initFadeInObserver();
   initHeaderBehavior();
+  initMobileNav();
 }
 
 // ============================================

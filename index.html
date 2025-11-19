@@ -23,37 +23,68 @@
 </head>
 
 <body>
+  <!-- Header / Navbar -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="AURUM Investimento - home">AURUM<span class="logo-mark">.</span></a>
+      <nav class="main-nav" role="navigation" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a href="#why">Por que</a></li>
+          <li><a href="#services">Serviços</a></li>
+          <li><a href="#testimonials">Depoimentos</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="header-ctas">
+        <a class="btn btn-primary" href="#contato">Agende consultoria</a>
+        <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
   <!-- Hero -->
-  <section id="hero" class="hero-wrapper">
-    <div class="hero-bg-overlay"></div>
-    <img src="/hero-accent.svg" alt="" class="hero-accent" aria-hidden="true">
-    <div class="hero-container">
-      <div class="hero-content">
-        <h1 class="hero-headline">Invista com segurança em imóveis de alto padrão</h1>
-        <p class="hero-subheadline">Retornos consistentes, gestão profissional e ativos selecionados com rigor.</p>
-        <a href="#contato" class="hero-cta">Simular Investimento</a>
-        <div class="hero-trust-bar">
-          <div class="trust-item">
-            <span class="trust-value">+120</span>
-            <span class="trust-label">investidores ativos</span>
-          </div>
-          <div class="trust-divider"></div>
-          <div class="trust-item">
-            <span class="trust-value">14,7% a.a</span>
-            <span class="trust-label">Retorno médio projetado</span>
-          </div>
-          <div class="trust-divider"></div>
-          <div class="trust-item">
-            <span class="trust-value">✓</span>
-            <span class="trust-label">Ativos auditados e com garantia real</span>
-          </div>
+  <section id="hero" class="hero">
+    <div class="hero-media" aria-hidden="true">
+      <img src="assets/img/hero-bg.svg" alt="" loading="lazy">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <h1 class="hero-title">Invista com segurança em imóveis de alto padrão</h1>
+        <p class="hero-sub">Retornos consistentes, gestão profissional e ativos selecionados com rigor.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#contato">Simular Investimento</a>
+          <a class="btn btn-outline" href="#contato">Falar com um especialista</a>
+        </div>
+      </div>
+      <div class="hero-side" aria-hidden="true">
+        <!-- espaço para futura ilustração / widget -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Micro-Metrics -->
+  <section class="metrics-row">
+    <div class="container">
+      <div class="metrics-row-inner">
+        <div class="metric-card">
+          <span class="metric-value">+5.383</span>
+          <span class="metric-label">Clientes</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">32</span>
+          <span class="metric-label">Países</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">R$ 18M</span>
+          <span class="metric-label">Patrimônio gerenciado</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Por que a AURUM existe -->
-  <section class="why-aurum fade-up">
+  <section id="why" class="why-aurum fade-up">
     <div class="container">
       <h2 class="section-title">Por que a AURUM existe</h2>
       <p class="section-text">Na AURUM Investimento, acreditamos que investir não deve ser complicado.</p>
@@ -78,7 +109,7 @@
   </section>
 
   <!-- Nossos serviços -->
-  <section class="our-services fade-up">
+  <section id="services" class="our-services fade-up">
     <div class="container">
       <h2 class="section-title">Nossos serviços</h2>
       <div class="services-list">
@@ -323,7 +354,7 @@
   </section>
 
   <!-- Depoimentos -->
-  <section class="testimonials fade-up">
+  <section id="testimonials" class="testimonials fade-up">
     <div class="container">
       <h2 class="section-title">Depoimentos</h2>
       <div class="testimonials-slider">
@@ -345,7 +376,7 @@
   </section>
 
   <!-- FAQ -->
-  <section class="faq fade-up">
+  <section id="faq" class="faq fade-up">
     <div class="container">
       <h2 class="section-title">FAQ</h2>
       <dl class="faq-list">
