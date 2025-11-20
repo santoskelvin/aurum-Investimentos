@@ -101,6 +101,63 @@ function initHeaderBehavior() {
 }
 
 // ============================================
+// HERO PARALLAX EFFECT
+// ============================================
+
+function initHeroParallax() {
+  const heroBg = qs('.hero-bg-image');
+  
+  if (!heroBg) {
+    return;
+  }
+  
+  // Respeitar preferência de movimento reduzido
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+  
+  let ticking = false;
+  
+  function handleScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const heroSection = qs('.hero');
+        
+        if (!heroSection) {
+          ticking = false;
+          return;
+        }
+        
+        const heroRect = heroSection.getBoundingClientRect();
+        const isVisible = heroRect.top < window.innerHeight && heroRect.bottom > 0;
+        
+        if (isVisible) {
+          // Calcular o deslocamento baseado na posição do scroll
+          // Movimento suave e sutil (até 30px)
+          const scrollProgress = Math.max(0, Math.min(1, -heroRect.top / (heroRect.height + window.innerHeight)));
+          const parallaxOffset = scrollProgress * 30;
+          
+          heroBg.style.transform = `translateY(${parallaxOffset}px)`;
+        } else if (heroRect.bottom < 0) {
+          // Reset quando a hero section está completamente acima da viewport
+          heroBg.style.transform = 'translateY(0px)';
+        }
+        
+        ticking = false;
+      });
+      
+      ticking = true;
+    }
+  }
+  
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  
+  // Verificar estado inicial
+  handleScroll();
+}
+
+// ============================================
 // MOBILE NAVIGATION TOGGLE
 // ============================================
 
@@ -148,6 +205,110 @@ function initMobileNav() {
 }
 
 // ============================================
+// HERO ANIMATIONS (Hierarchical Loading + Counter)
+// ============================================
+
+function initHeroAnimations() {
+  const heroSection = qs('.hero');
+  if (!heroSection) return;
+  
+  // Respeitar preferência de movimento reduzido
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  // Animar elementos hierarquicamente
+  const animateItems = qsa('.hero-animate-item');
+  
+  if (animateItems.length === 0) return;
+  
+  // Função para animar um item
+  function animateItem(item, delay) {
+    setTimeout(() => {
+      item.classList.add('visible');
+    }, delay * 1000);
+  }
+  
+  // Animar todos os itens com seus delays
+  animateItems.forEach(item => {
+    const delay = parseFloat(item.getAttribute('data-animate-delay')) || 0;
+    animateItem(item, delay);
+  });
+  
+  // Animar contadores de números
+  function animateCounter(element, target, duration = 2000) {
+    if (prefersReducedMotion) {
+      element.textContent = target;
+      return;
+    }
+    
+    const prefix = element.getAttribute('data-prefix') || '';
+    const suffix = element.getAttribute('data-suffix') || '';
+    const start = 0;
+    const startTime = performance.now();
+    
+    // Adicionar classe de animação
+    element.classList.add('animating');
+    
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function (ease-out)
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(start + (target - start) * easeOut);
+      
+      // Formatar o valor
+      let displayValue = current.toString();
+      
+      // Adicionar prefixo/sufixo se necessário
+      if (prefix && suffix) {
+        displayValue = `${prefix}${displayValue}${suffix}`;
+      } else if (prefix) {
+        displayValue = `${prefix}${displayValue}`;
+      } else if (suffix) {
+        displayValue = `${displayValue}${suffix}`;
+      } else {
+        displayValue = current.toString();
+      }
+      
+      element.textContent = displayValue;
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        // Garantir valor final exato
+        let finalValue = target.toString();
+        if (prefix && suffix) {
+          finalValue = `${prefix}${finalValue}${suffix}`;
+        } else if (prefix) {
+          finalValue = `${prefix}${finalValue}`;
+        } else if (suffix) {
+          finalValue = `${finalValue}${suffix}`;
+        } else {
+          finalValue = target.toString();
+        }
+        element.textContent = finalValue;
+        element.classList.remove('animating');
+      }
+    }
+    
+    requestAnimationFrame(update);
+  }
+  
+  // Iniciar animação dos contadores após um delay
+  setTimeout(() => {
+    const metricValues = qsa('.hero-metric-value[data-target]');
+    metricValues.forEach((element, index) => {
+      const target = parseInt(element.getAttribute('data-target'));
+      const delay = index * 200; // Delay escalonado entre os números
+      
+      setTimeout(() => {
+        animateCounter(element, target);
+      }, delay);
+    });
+  }, 800); // Iniciar após as animações de texto começarem
+}
+
+// ============================================
 // INIT FUNCTION
 // ============================================
 
@@ -156,6 +317,8 @@ function init() {
   initFadeInObserver();
   initHeaderBehavior();
   initMobileNav();
+  initHeroParallax();
+  initHeroAnimations();
 }
 
 // ============================================

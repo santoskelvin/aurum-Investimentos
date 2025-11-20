@@ -102,4 +102,41 @@
   transition-delay: 0.4s;
 }
 
+/* ============================================
+   ANIMAÇÕES DA HERO SECTION
+   ============================================ */
+
+.hero-animate-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-animate-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animação específica para números */
+.hero-metric-value {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.hero-metric-value.animating {
+  transform: scale(1.1);
+}
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  .hero-animate-item {
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
+  }
+  
+  .hero-metric-value.animating {
+    transform: scale(1);
+  }
+}
 

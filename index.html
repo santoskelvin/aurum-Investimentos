@@ -10,10 +10,12 @@
   <meta name="description"
     content="Soluções inteligentes, seguras e personalizadas para acelerar seus resultados no mercado financeiro.">
 
-  <!-- Google Fonts - Inter -->
+  <!-- Google Fonts - Inter e Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet">
 
 
   <!-- Stylesheets -->
@@ -44,54 +46,88 @@
 
   <!-- Hero -->
   <section id="hero" class="hero">
-    <div class="hero-media" aria-hidden="true">
-      <img src="assets/img/hero-bg.svg" alt="" loading="lazy">
-      <div class="hero-overlay"></div>
-    </div>
+    <div class="hero-bg-image" aria-hidden="true"></div>
+    <div class="hero-overlay"></div>
     <div class="container hero-inner">
-      <div class="hero-copy">
-        <h1 class="hero-title">Invista com segurança em imóveis de alto padrão</h1>
-        <p class="hero-sub">Retornos consistentes, gestão profissional e ativos selecionados com rigor.</p>
-        <div class="hero-ctas">
-          <a class="btn btn-primary" href="#contato">Simular Investimento</a>
-          <a class="btn btn-outline" href="#contato">Falar com um especialista</a>
+      <div class="hero-content">
+        <h1 class="hero-title hero-animate-item" data-animate-delay="0.1">Invista com segurança em imóveis de alto
+          padrão</h1>
+        <p class="hero-subtitle hero-animate-item" data-animate-delay="0.3">Soluções personalizadas, gestão inteligente
+          e consultoria especializada para transformar seu futuro financeiro</p>
+        <div class="hero-ctas hero-animate-item" data-animate-delay="0.5">
+          <a class="btn btn-primary" href="#contato">Agende sua consultoria</a>
+          <a class="btn btn-outline" href="#contato">Simule seu investimento</a>
         </div>
-      </div>
-      <div class="hero-side" aria-hidden="true">
-        <!-- espaço para futura ilustração / widget -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Micro-Metrics -->
-  <section class="metrics-row">
-    <div class="container">
-      <div class="metrics-row-inner">
-        <div class="metric-card">
-          <span class="metric-value">+5.383</span>
-          <span class="metric-label">Clientes</span>
-        </div>
-        <div class="metric-card">
-          <span class="metric-value">32</span>
-          <span class="metric-label">Países</span>
-        </div>
-        <div class="metric-card">
-          <span class="metric-value">R$ 18M</span>
-          <span class="metric-label">Patrimônio gerenciado</span>
+        <div class="hero-metrics hero-animate-item" data-animate-delay="0.7">
+          <div class="hero-metric-item">
+            <span class="hero-metric-value" data-target="1500" data-prefix="+">0</span>
+            <span class="hero-metric-label">clientes atendidos</span>
+          </div>
+          <div class="hero-metric-item">
+            <span class="hero-metric-value" data-target="150" data-prefix="R$ " data-suffix=" milhões">R$ 0</span>
+            <span class="hero-metric-label">em patrimônio assessorado</span>
+          </div>
+          <div class="hero-metric-item">
+            <span class="hero-metric-value" data-target="32">0</span>
+            <span class="hero-metric-label">estados atendidos</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Por que a AURUM existe -->
-  <section id="why" class="why-aurum fade-up">
+  <!-- Como funciona a Alavancagem Patrimonial -->
+  <section id="why" class="how-it-works fade-up">
     <div class="container">
-      <h2 class="section-title">Por que a AURUM existe</h2>
-      <p class="section-text">Na AURUM Investimento, acreditamos que investir não deve ser complicado.</p>
-      <p class="section-text">Criamos um ecossistema completo para quem busca rentabilidade, segurança e clareza, sem
-        promessas irreais ou linguagem técnica desnecessária.</p>
-      <p class="section-text">Aqui, você investe com quem realmente entende o cenário brasileiro — e sabe transformar
-        estratégia em resultado.</p>
+      <div class="how-it-works-header">
+        <p class="how-it-works-label">Na prática</p>
+        <h2 class="how-it-works-title">Como funciona a Alavancagem Patrimonial</h2>
+        <p class="how-it-works-subtitle">Use crédito de forma inteligente e construa patrimônio sem comprometer seu
+          bolso.</p>
+      </div>
+
+      <div class="how-it-works-content">
+        <div class="how-it-works-illustration">
+          <img src="assets/img/person.svg" alt="Ilustração do processo de alavancagem patrimonial"
+            class="illustration-img">
+        </div>
+
+        <div class="how-it-works-steps">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4 class="step-title">Compra com capital de terceiros</h4>
+              <p class="step-description">Você utiliza crédito estruturado para adquirir um imóvel sem grande entrada.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4 class="step-title">Renda com aluguel</h4>
+              <p class="step-description">O imóvel é alugado e começa a gerar fluxo mensal.</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4 class="step-title">Aluguel cobre as parcelas</h4>
+              <p class="step-description">A renda do aluguel abate parte importante da parcela, reduzindo seu esforço
+                financeiro.</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4 class="step-title">Patrimônio crescendo com segurança</h4>
+              <p class="step-description">Com o tempo, a dívida diminui, o imóvel valoriza e seu patrimônio aumenta.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -409,13 +445,14 @@
   <!-- Lib opcional: GlideJS (carrossel alternativo) -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script> -->
 
-  <!-- Lib opcional: AOS (animações on scroll) -->
-  <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
-  <!-- <script>AOS.init();</script> -->
+  <!-- GSAP para animações avançadas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <!-- Scripts principais -->
   <script src="assets/js/script.js"></script>
   <script src="assets/js/rentabilidade.js"></script>
+  <script src="assets/js/how-it-works-animations.js"></script>
 
   <!-- Widget de Métricas -->
   <script>
