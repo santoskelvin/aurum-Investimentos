@@ -31,6 +31,57 @@
     initHowItWorksAnimations();
   }
 
+  // Função utilitária para verificar se elemento está visível na viewport
+  function isElementVisible(element, threshold = 0.2) {
+    if (!element) return false;
+    const rect = element.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    return (
+      rect.top < windowHeight * (1 - threshold) &&
+      rect.bottom > 0 &&
+      rect.left < windowWidth &&
+      rect.right > 0
+    );
+  }
+
+  // Função para completar animações se elementos já estão visíveis
+  function checkAndCompleteAnimations(section, timelines) {
+    if (!section || !timelines || timelines.length === 0) return;
+    
+    // Aguardar ScrollTrigger estar pronto
+    setTimeout(() => {
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
+      
+      timelines.forEach(timeline => {
+        if (timeline && timeline.progress() === 0) {
+          const trigger = timeline.scrollTrigger;
+          if (trigger && trigger.trigger) {
+            if (isElementVisible(trigger.trigger, 0.2)) {
+              timeline.progress(1);
+            }
+          }
+        }
+      });
+    }, 100);
+    
+    // Verificar novamente após um delay maior
+    setTimeout(() => {
+      timelines.forEach(timeline => {
+        if (timeline && timeline.progress() === 0) {
+          const trigger = timeline.scrollTrigger;
+          if (trigger && trigger.trigger) {
+            if (isElementVisible(trigger.trigger, 0.2)) {
+              timeline.progress(1);
+            }
+          }
+        }
+      });
+    }, 300);
+  }
+
   function initHowItWorksAnimations() {
     const section = document.querySelector('.how-it-works');
     
@@ -64,21 +115,30 @@
       });
 
       headerTimeline
-        .from(headerLabel, {
+        .fromTo(headerLabel, {
           opacity: 0,
-          y: 20,
+          y: 20
+        }, {
+          opacity: 1,
+          y: 0,
           duration: 0.6,
           ease: 'power2.out'
         })
-        .from(headerTitle, {
+        .fromTo(headerTitle, {
           opacity: 0,
-          y: 30,
+          y: 30
+        }, {
+          opacity: 1,
+          y: 0,
           duration: 0.8,
           ease: 'power3.out'
         }, '-=0.4')
-        .from(headerSubtitle, {
+        .fromTo(headerSubtitle, {
           opacity: 0,
-          y: 20,
+          y: 20
+        }, {
+          opacity: 1,
+          y: 0,
           duration: 0.6,
           ease: 'power2.out'
         }, '-=0.5');
@@ -91,18 +151,26 @@
     const illustration = section.querySelector('.how-it-works-illustration');
     
     if (illustration) {
-      gsap.from(illustration, {
+      const illustrationAnim = gsap.fromTo(illustration, {
+        opacity: 0,
+        scale: 0.8,
+        x: -50
+      }, {
         scrollTrigger: {
           trigger: illustration,
           start: 'top 85%',
-          toggleActions: 'play none none none'
+          toggleActions: 'play none none none',
+          once: true
         },
-        opacity: 0,
-        scale: 0.8,
-        x: -50,
+        opacity: 1,
+        scale: 1,
+        x: 0,
         duration: 1,
         ease: 'power3.out'
       });
+      if (illustrationAnim.scrollTrigger) {
+        allTimelines.push(illustrationAnim);
+      }
     }
 
     // ============================================
@@ -116,21 +184,31 @@
         const stepNumber = step.querySelector('.step-number');
         const stepContent = step.querySelector('.step-content');
         
+        // Garantir que os elementos estejam visíveis por padrão no CSS
+        // Não usar gsap.set aqui para não interferir com as animações
+        
         // Timeline para cada step
         const stepTimeline = gsap.timeline({
           scrollTrigger: {
             trigger: step,
             start: 'top 85%',
-            toggleActions: 'play none none none'
-          }
+            toggleActions: 'play none none none',
+            once: true
+          },
+          immediateRender: false,
+          paused: true // Pausar inicialmente, será disparado pelo ScrollTrigger
         });
 
         // Animação do número (pulse + fade)
         if (stepNumber) {
-          stepTimeline.from(stepNumber, {
+          stepTimeline.fromTo(stepNumber, {
             opacity: 0,
             scale: 0,
-            rotation: -180,
+            rotation: -180
+          }, {
+            opacity: 1,
+            scale: 1,
+            rotation: 0,
             duration: 0.6,
             ease: 'back.out(1.7)'
           });
@@ -138,23 +216,62 @@
 
         // Animação do conteúdo (slide da direita)
         if (stepContent) {
-          stepTimeline.from(stepContent, {
+          stepTimeline.fromTo(stepContent, {
             opacity: 0,
-            x: 50,
+            x: 50
+          }, {
+            opacity: 1,
+            x: 0,
             duration: 0.7,
             ease: 'power2.out'
           }, index > 0 ? '-=0.3' : '-=0.2');
         }
 
         // Animação do card completo (fade + scale)
-        stepTimeline.from(step, {
+        stepTimeline.fromTo(step, {
           opacity: 0,
-          y: 30,
+          y: 30
+        }, {
+          opacity: 1,
+          y: 0,
           duration: 0.5,
           ease: 'power2.out'
         }, '-=0.7');
+        
+        // Verificar se o elemento já está visível na viewport ao carregar
+        // Se estiver, forçar a animação a completar imediatamente
+        const checkVisibility = () => {
+          const rect = step.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          // Verificar se o elemento está acima da linha de 85% da viewport
+          const isVisible = rect.top < windowHeight * 0.85 && rect.bottom > 0;
+          
+          if (isVisible && stepTimeline.progress() === 0) {
+            // Elemento já está visível, completar animação imediatamente
+            stepTimeline.progress(1);
+            stepTimeline.play(); // Garantir que a animação seja executada
+          }
+        };
+        
+        // Verificar após ScrollTrigger ser inicializado
+        if (typeof ScrollTrigger !== 'undefined') {
+          // Aguardar ScrollTrigger estar pronto
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+            checkVisibility();
+          }, 50);
+          
+          // Verificar novamente após um delay maior
+          setTimeout(checkVisibility, 200);
+        } else {
+          // Fallback: verificar imediatamente
+          setTimeout(checkVisibility, 100);
+        }
       });
     }
+
+    // Verificar e completar animações se elementos já estão visíveis
+    checkAndCompleteAnimations(section, allTimelines);
 
     // ============================================
     // HOVER EFFECTS MELHORADOS

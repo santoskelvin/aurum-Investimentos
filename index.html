@@ -22,18 +22,54 @@
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/animations.css">
 
+  <!-- Debug temporário para identificar overflow -->
+  <script>
+    window.addEventListener('load', () => {
+      const docWidth = document.documentElement.offsetWidth;
+      const bodyWidth = document.body.offsetWidth;
+      const windowWidth = window.innerWidth;
+
+      console.log('=== DEBUG OVERFLOW ===');
+      console.log('Window width:', windowWidth);
+      console.log('Document width:', docWidth);
+      console.log('Body width:', bodyWidth);
+      console.log('Body scrollHeight:', document.body.scrollHeight);
+      console.log('Window innerHeight:', window.innerHeight);
+      console.log('Document scrollHeight:', document.documentElement.scrollHeight);
+
+      // Verificar elementos que excedem a largura
+      const elements = document.querySelectorAll('*');
+      elements.forEach(el => {
+        if (el.scrollWidth > windowWidth) {
+          console.warn('Elemento com overflow horizontal:', el.tagName, el.className, 'scrollWidth:', el.scrollWidth);
+        }
+      });
+
+      // Verificar body overflow
+      const hasBodyOverflow = document.body.scrollHeight > document.body.clientHeight;
+      const hasHtmlOverflow = document.documentElement.scrollHeight > document.documentElement.clientHeight;
+      console.log('Body tem overflow vertical?', hasBodyOverflow);
+      console.log('HTML tem overflow vertical?', hasHtmlOverflow);
+      console.log('======================');
+    });
+  </script>
+
 </head>
 
 <body>
   <!-- Header / Navbar -->
   <header class="site-header">
+    <div class="nav-overlay"></div>
     <div class="container header-inner">
       <a href="/" class="logo" aria-label="AURUM Investimento - home">AURUM<span class="logo-mark">.</span></a>
       <nav class="main-nav" role="navigation" aria-label="Main menu">
+        <button class="nav-close" aria-label="Fechar menu">×</button>
         <ul class="nav-list">
-          <li><a href="#why">Por que</a></li>
-          <li><a href="#services">Serviços</a></li>
-          <li><a href="#testimonials">Depoimentos</a></li>
+          <li><a href="#hero">Início</a></li>
+          <li><a href="#why">Como Funciona</a></li>
+          <li><a href="#rentabilidade">Rentabilidade</a></li>
+          <li><a href="#simulador-rapido">Simulador</a></li>
+          <li><a href="#planos">Planos</a></li>
           <li><a href="#faq">FAQ</a></li>
         </ul>
       </nav>
@@ -131,122 +167,20 @@
     </div>
   </section>
 
-  <!-- O que você recebe na prática -->
-  <section class="what-you-get fade-up">
+  <!-- Rentabilidade por Estratégia -->
+  <section id="rentabilidade" class="rentabilidade-section fade-up" role="region" aria-labelledby="rentabilidade-title">
     <div class="container">
-      <h2 class="section-title">O que você recebe na prática</h2>
-      <ul class="benefits-list">
-        <li class="benefit-item">✔ Estratégias sob medida</li>
-        <li class="benefit-item">✔ Análise profissional contínua</li>
-        <li class="benefit-item">✔ Segurança e transparência total</li>
-        <li class="benefit-item">✔ Suporte humano (e realmente humano)</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Nossos serviços -->
-  <section id="services" class="our-services fade-up">
-    <div class="container">
-      <h2 class="section-title">Nossos serviços</h2>
-      <div class="services-list">
-        <div class="service-card">
-          <div class="service-icon">★</div>
-          <h3>Consultoria de Investimentos</h3>
-          <p>Orientação personalizada para suas decisões de investimento com estratégias sob medida.</p>
+      <div class="rentabilidade-header">
+        <div class="rentabilidade-header-content">
+          <p class="rentabilidade-label">ALAVANCAGEM IMOBILIÁRIA</p>
+          <h2 id="rentabilidade-title" class="rentabilidade-title">As rentabilidades mais inteligentes do mercado</h2>
+          <p class="rentabilidade-description">Acompanhe a evolução dos seus investimentos ao longo do tempo e veja como
+            seu patrimônio pode crescer com segurança, estratégia e alto potencial de retorno.</p>
         </div>
-        <div class="service-card">
-          <div class="service-icon">★</div>
-          <h3>Planejamento Financeiro Completo</h3>
-          <p>Análise profunda do seu perfil e criação de um plano financeiro estruturado e eficiente.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">★</div>
-          <h3>Portfólios Inteligentes</h3>
-          <p>Construção e gestão de carteiras diversificadas alinhadas aos seus objetivos.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">★</div>
-          <h3>Gestão Assistida</h3>
-          <p>Acompanhamento contínuo e ajustes estratégicos para otimizar seus resultados.</p>
+        <div class="rentabilidade-cta">
+          <a href="#contato" class="btn btn-primary">Agende sua consultoria →</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Passos -->
-  <section class="steps-section fade-up">
-    <div class="container">
-      <h2 class="section-title">Como funciona</h2>
-      <ol class="steps-widget">
-        <li class="step">
-          <div class="step-index">01</div>
-          <div class="step-content">
-            <h4>Compra com capital de terceiros</h4>
-            <p>Use o capital emprestado para adquirir um imóvel.</p>
-          </div>
-        </li>
-        <li class="step">
-          <div class="step-index">02</div>
-          <div class="step-content">
-            <h4>Análise e planejamento</h4>
-            <p>Nossos especialistas analisam seu perfil e criam uma estratégia personalizada.</p>
-          </div>
-        </li>
-        <li class="step">
-          <div class="step-index">03</div>
-          <div class="step-content">
-            <h4>Implementação da estratégia</h4>
-            <p>Colocamos seu plano em ação com acompanhamento contínuo.</p>
-          </div>
-        </li>
-        <li class="step">
-          <div class="step-index">04</div>
-          <div class="step-content">
-            <h4>Acompanhamento e otimização</h4>
-            <p>Monitoramos seus investimentos e ajustamos conforme necessário.</p>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- Por que confiar na AURUM -->
-  <section class="why-trust fade-up">
-    <div class="container">
-      <h2 class="section-title">Por que confiar na AURUM</h2>
-      <ul class="trust-list">
-        <li class="trust-item">– Anos de atuação ajudando clientes a crescer com segurança</li>
-        <li class="trust-item">– Especialistas certificados e parceiros das principais instituições</li>
-        <li class="trust-item">– Estratégias testadas e aplicadas por investidores experientes</li>
-        <li class="trust-item">– Zero promessas irreais — apenas trabalho real e resultados consistentes</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Métricas -->
-  <section class="metrics-section fade-up">
-    <div class="container">
-      <div class="metrics-widget">
-        <div class="metric">
-          <span class="metric-value" data-target="5383">0</span>
-          <span class="metric-label">Clientes ao redor do mundo</span>
-        </div>
-        <div class="metric">
-          <span class="metric-value" data-target="12">0</span>
-          <span class="metric-label">Anos de experiência</span>
-        </div>
-        <div class="metric">
-          <span class="metric-value" data-target="98">0</span>
-          <span class="metric-label">% de satisfação</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gráficos de Rentabilidade -->
-  <section class="rentabilidade-section fade-up" role="region" aria-labelledby="rentabilidade-title">
-    <div class="container">
-      <h2 id="rentabilidade-title" class="section-title">Rentabilidade por Estratégia</h2>
 
       <div class="rentabilidade-grid" id="rentabilidade-container">
         <!-- Card: Renda Fixa -->
@@ -375,58 +309,329 @@
     </div>
   </section>
 
-  <!-- Para quem é a AURUM -->
-  <section class="who-is-for fade-up">
+  <!-- Simulador rápido -->
+  <section id="simulador-rapido" class="micro-calc-section fade-up">
+    <div class="container micro-calc-grid">
+      <div class="micro-calc-copy">
+        <p class="micro-calc-label">Simule em segundos</p>
+        <h3 class="micro-calc-title">Converta seu aporte em patrimônio projetado</h3>
+        <p class="micro-calc-text">Informe um aporte mensal para visualizar rapidamente como o valor pode evoluir em um
+          ciclo anual com estratégias de alavancagem patrimonial Aurum.</p>
+        <ul class="micro-calc-list">
+          <li>Resultados baseados em um multiplicador conservador.</li>
+          <li>Renda estimada considera 18% de rentabilidade anual.</li>
+          <li>Valores meramente ilustrativos para referência inicial.</li>
+        </ul>
+      </div>
+      <form class="micro-calc-card" data-microcalc>
+        <div class="micro-input-group">
+          <label for="micro-aporte">Aporte mensal (R$)</label>
+          <div class="micro-input-wrap">
+            <span>R$</span>
+            <input type="number" id="micro-aporte" name="micro-aporte" min="200" max="20000" step="100" value="1800"
+              required>
+          </div>
+        </div>
+
+        <div class="micro-results">
+          <div class="micro-result">
+            <p>Patrimônio projetado (12 meses)</p>
+            <strong data-micro-annual>R$ 0,00</strong>
+          </div>
+          <div class="micro-result">
+            <p>Renda mensal estimada</p>
+            <strong data-micro-income>R$ 0,00</strong>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary micro-calc-btn">
+          Atualizar projeção
+        </button>
+      </form>
+    </div>
+  </section>
+  <!-- Passo a Passo -->
+  <section id="passo-a-passo" class="passo-a-passo-section fade-up">
     <div class="container">
-      <h2 class="section-title">Para quem é a AURUM</h2>
-      <p class="section-text">A AURUM é ideal para pessoas que:</p>
-      <ul class="target-list">
-        <li class="target-item">– Querem investir melhor, mas não têm tempo para estudar o mercado</li>
-        <li class="target-item">– Buscam orientação profissional para crescer com segurança</li>
-        <li class="target-item">– Estão cansadas de promessas milagrosas de "ganho rápido"</li>
-        <li class="target-item">– Querem construir patrimônio de forma estruturada e inteligente</li>
-      </ul>
+      <div class="passo-a-passo-header">
+        <p class="passo-a-passo-label">passo a passo</p>
+        <h2 class="passo-a-passo-title">Nós te guiamos</h2>
+        <p class="passo-a-passo-subtitle">Com um passo-a-passo simples, você inicia uma nova fase na sua vida
+          fincanceira!</p>
+      </div>
+
+      <div class="passo-a-passo-grid">
+        <div class="passo-card">
+          <img src="assets/img/card-image/card-1.svg" alt="Passo 1" class="passo-card-image">
+        </div>
+        <div class="passo-card">
+          <img src="assets/img/card-image/card-2.svg" alt="Passo 2" class="passo-card-image">
+        </div>
+        <div class="passo-card">
+          <img src="assets/img/card-image/CARD-3.svg" alt="Passo 3" class="passo-card-image">
+        </div>
+        <div class="passo-card">
+          <img src="assets/img/card-image/card-4.svg" alt="Passo 4" class="passo-card-image">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Planos de Alavancagem -->
+  <section id="planos" class="planos-section fade-up">
+    <div class="container">
+      <div class="planos-header">
+        <p class="planos-label">Nossos Planos de Alavancagem Patrimonial</p>
+        <h2 class="planos-title">Escolha a estratégia ideal para construir e multiplicar seu patrimônio com segurança e
+          alta performance.</h2>
+      </div>
+
+      <div class="planos-grid">
+        <article class="plano-card">
+          <header class="plano-card-header">
+            <p class="plano-nome">Starter</p>
+          </header>
+          <div class="plano-item">
+            <span>Patrimônio projetado</span>
+            <strong>R$ 1.750.000,00</strong>
+          </div>
+          <div class="plano-item">
+            <span>Renda passiva estimada</span>
+            <strong>R$ 9.140,00</strong>
+          </div>
+          <div class="plano-item">
+            <span>Investimento mensal</span>
+            <strong>R$ 2.090,00</strong>
+          </div>
+          <button class="btn btn-primary plano-btn">QUERO INVESTIR</button>
+        </article>
+
+        <article class="plano-card plano-card-destaque">
+          <header class="plano-card-header">
+            <p class="plano-nome">Investor</p>
+            <span class="plano-badge">Mais popular</span>
+          </header>
+          <div class="plano-item">
+            <span>Patrimônio projetado</span>
+            <strong>R$ 3.000.000,00</strong>
+          </div>
+          <div class="plano-item">
+            <span>Renda passiva estimada</span>
+            <strong>R$ 16.080,00</strong>
+          </div>
+          <div class="plano-item">
+            <span>Investimento mensal</span>
+            <strong>R$ 3.480,00</strong>
+          </div>
+          <button class="btn btn-primary plano-btn">QUERO INVESTIR</button>
+        </article>
+
+        <article class="plano-card">
+          <header class="plano-card-header">
+            <p class="plano-nome">Private</p>
+          </header>
+          <div class="plano-item">
+            <span>Patrimônio projetado</span>
+            <strong>R$ 4.000.000,00</strong>
+          </div>
+          <div class="plano-item">
+            <span>Renda passiva estimada</span>
+            <strong>R$ 21.440,00</strong>
+          </div>
+          <div class="plano-item">
+            <span>Investimento mensal</span>
+            <strong>R$ 4.640,00</strong>
+          </div>
+          <button class="btn btn-primary plano-btn">QUERO INVESTIR</button>
+        </article>
+      </div>
     </div>
   </section>
 
-  <!-- Depoimentos -->
-  <section id="testimonials" class="testimonials fade-up">
+
+  <!-- AURUM PATRIMONIAL -->
+  <section id="aurum-patrimonial" class="aurum-patrimonial fade-up">
     <div class="container">
-      <h2 class="section-title">Depoimentos</h2>
-      <div class="testimonials-slider">
-        <div class="slides">
-          <div class="testimonial">
-            <blockquote class="testimonial-text">"Com a AURUM, finalmente entendi onde estou investindo e por quê."
-            </blockquote>
-          </div>
-          <div class="testimonial">
-            <blockquote class="testimonial-text">"Meu patrimônio cresceu de forma consistente e segura. Recomendo
-              demais."
-            </blockquote>
-          </div>
+      <div class="aurum-patrimonial-header">
+        <p class="aurum-patrimonial-label">AURUM • CRESCIMENTO COM TRANSPARÊNCIA E PROPÓSITO •</p>
+        <h2 class="aurum-patrimonial-title">Construímos seu patrimônio com estratégia, cuidado e excelência.</h2>
+        <div class="aurum-patrimonial-main-block">
+          <h3 class="aurum-patrimonial-main-title">Nossa missão é simples e poderosa:
+            ajudar você a crescer com segurança, clareza e oportunidades reais.</h3>
         </div>
-        <button class="prev" aria-label="Depoimento anterior">←</button>
-        <button class="next" aria-label="Próximo depoimento">→</button>
+      </div>
+
+      <div class="aurum-patrimonial-grid">
+        <div class="aurum-card">
+          <div class="aurum-card-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 8L12 14V28H28V14L20 8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" fill="none" />
+              <path d="M20 8V20M20 20L12 14M20 20L28 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <circle cx="20" cy="28" r="2" fill="currentColor" />
+            </svg>
+          </div>
+          <h3 class="aurum-card-title">Aprovação de crédito</h3>
+          <p class="aurum-card-text">Consórcio, financiamento e opções de crédito estruturado, sempre escolhidas para
+            facilitar sua entrada no mercado da forma mais estratégica possível.</p>
+        </div>
+
+        <div class="aurum-card">
+          <div class="aurum-card-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="12" width="24" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" />
+              <path d="M8 18H32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              <path d="M14 24H26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              <path d="M14 28H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              <circle cx="20" cy="8" r="3" fill="currentColor" />
+            </svg>
+          </div>
+          <h3 class="aurum-card-title">Oportunidades imobiliárias para compra</h3>
+          <p class="aurum-card-text">Selecionamos imóveis com alto potencial: leilões, planta, unidades abaixo do
+            mercado e estoques especiais. Você recebe apenas oportunidades filtradas e alinhadas ao seu objetivo.</p>
+        </div>
+
+        <div class="aurum-card">
+          <div class="aurum-card-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 8L24 16H32L26 22L28 30L20 25L12 30L14 22L8 16H16L20 8Z" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              <circle cx="20" cy="20" r="2" fill="currentColor" />
+            </svg>
+          </div>
+          <h3 class="aurum-card-title">Locação com máxima rentabilidade</h3>
+          <p class="aurum-card-text">Gerimos todo o processo para que seu imóvel renda mais: gestão completa, temporada
+            e melhorias que aumentam o retorno — com tranquilidade e consistência.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section id="faq" class="faq fade-up">
-    <div class="container">
-      <h2 class="section-title">FAQ</h2>
-      <dl class="faq-list">
-        <dt class="faq-question">Posso começar mesmo sem entender nada de investimentos?</dt>
-        <dd class="faq-answer">Sim. Nosso trabalho é justamente simplificar tudo para você.</dd>
+  <section id="faq" class="faq-section fade-up" aria-labelledby="faq-title">
+    <div class="container faq-layout">
+      <div class="faq-intro">
+        <p class="faq-label">FAQs</p>
+        <h2 id="faq-title" class="faq-title">Perguntas Frequentes</h2>
+        <p class="faq-subtitle">Respostas claras sobre rentabilidade, riscos, taxas e como acompanhamos cada etapa do
+          seu plano de alavancagem patrimonial.</p>
+      </div>
 
-        <dt class="faq-question">Preciso ter muito dinheiro para investir?</dt>
-        <dd class="faq-answer">Não. Trabalhamos com diferentes perfis e valores.</dd>
+      <dl class="faq-accordion" role="list">
+        <div class="faq-item open" role="presentation">
+          <dt>
+            <button class="faq-trigger" aria-expanded="true" aria-controls="faq-panel-0" id="faq-control-0">
+              <span>Posso começar mesmo sem entender nada de investimentos?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+          </dt>
+          <dd id="faq-panel-0" role="region" aria-labelledby="faq-control-0">
+            Sim. Nosso trabalho é justamente simplificar tudo para você.
+          </dd>
+        </div>
 
-        <dt class="faq-question">Vocês prometem rentabilidade?</dt>
-        <dd class="faq-answer">Jamais. O mercado financeiro tem riscos.</dd>
+        <div class="faq-item" role="presentation">
+          <dt>
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-1" id="faq-control-1">
+              <span>Preciso ter muito dinheiro para investir?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+          </dt>
+          <dd id="faq-panel-1" role="region" aria-labelledby="faq-control-1">
+            Não. Trabalhamos com diferentes perfis e valores.
+          </dd>
+        </div>
 
-        <dt class="faq-question">Quanto tempo leva para montar a estratégia?</dt>
-        <dd class="faq-answer">Entre 3 e 7 dias úteis.</dd>
+        <div class="faq-item" role="presentation">
+          <dt>
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-2" id="faq-control-2">
+              <span>Vocês prometem rentabilidade?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+          </dt>
+          <dd id="faq-panel-2" role="region" aria-labelledby="faq-control-2">
+            Jamais. O mercado financeiro tem riscos.
+          </dd>
+        </div>
+
+        <div class="faq-item" role="presentation">
+          <dt>
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-3" id="faq-control-3">
+              <span>Como é calculada a rentabilidade dos planos?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+          </dt>
+          <dd id="faq-panel-3" role="region" aria-labelledby="faq-control-3">
+            A rentabilidade apresentada é uma estimativa baseada em premissas históricas e projeções internas. Ela
+            considera uma taxa média anual (informada nos planos) e é usada apenas para simulação — resultados passados
+            não garantem retornos futuros.
+          </dd>
+        </div>
+
+        <div class="faq-item" role="presentation">
+          <dt>
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-4" id="faq-control-4">
+              <span>Quais os principais riscos envolvidos?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+          </dt>
+          <dd id="faq-panel-4" role="region" aria-labelledby="faq-control-4">
+            Riscos de mercado (variação de preço), liquidez, e riscos específicos do ativo/imóvel. Trabalhamos com
+            gestão ativa para mitigar riscos, mas não os eliminamos.
+          </dd>
+        </div>
+
+        <div class="faq-item" role="presentation">
+          <dt>
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-5" id="faq-control-5">
+              <span>Como funcionam taxas e impostos?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+          </dt>
+          <dd id="faq-panel-5" role="region" aria-labelledby="faq-control-5">
+            Custos operacionais e tributação variam conforme veículo de investimento. Tributação segue legislação
+            vigente (ex.: imposto de renda sobre renda variável/juros, quando aplicável). Forneceremos relatórios e
+            orientação fiscal conforme necessário.
+          </dd>
+        </div>
+
+        <div class="faq-item" role="presentation">
+          <dt>
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-6" id="faq-control-6">
+              <span>Posso resgatar meu investimento quando quiser?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+          </dt>
+          <dd id="faq-panel-6" role="region" aria-labelledby="faq-control-6">
+            A liquidez depende do plano/veículo. Alguns planos têm prazos mínimos ou janelas de resgate. Antes de
+            investir, veremos o horizonte recomendado e as condições de saída.
+          </dd>
+        </div>
+
+        <div class="faq-item" role="presentation">
+          <dt>
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-7" id="faq-control-7">
+              <span>Como começo? Qual o primeiro passo?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+          </dt>
+          <dd id="faq-panel-7" role="region" aria-labelledby="faq-control-7">
+            Agende uma conversa conosco; avaliamos seu perfil, objetivos e montamos a estratégia de alavancagem adequada
+            ao seu caso.
+          </dd>
+        </div>
+
+        <div class="faq-item" role="presentation">
+          <dt>
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-8" id="faq-control-8">
+              <span>Vocês oferecem acompanhamento e relatórios?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+          </dt>
+          <dd id="faq-panel-8" role="region" aria-labelledby="faq-control-8">
+            Sim. Enviamos relatórios periódicos e mantemos acompanhamento contínuo da carteira e das oportunidades.
+          </dd>
+        </div>
       </dl>
     </div>
   </section>
@@ -438,6 +643,49 @@
       <button class="btn btn-cta">Quero minha consultoria agora</button>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">AURUM<span class="logo-mark">.</span></a>
+          <p class="footer-tagline">Alavancagem patrimonial com estratégia e segurança.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4 class="footer-title">Navegação</h4>
+            <ul class="footer-nav">
+              <li><a href="#hero">Início</a></li>
+              <li><a href="#why">Como Funciona</a></li>
+              <li><a href="#rentabilidade">Rentabilidade</a></li>
+              <li><a href="#simulador-rapido">Simulador</a></li>
+              <li><a href="#planos">Planos</a></li>
+              <li><a href="#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4 class="footer-title">Contato</h4>
+            <ul class="footer-nav">
+              <li><a href="#contato">Agende Consultoria</a></li>
+              <li><a href="#simulador-rapido">Simule seu Investimento</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2024 AURUM Investimento. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" class="back-to-top" aria-label="Voltar ao topo" title="Voltar ao topo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 5V15M10 5L5 10M10 5L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+  </button>
 
   <!-- Lib opcional: SwiperJS (carrossel profissional) -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
@@ -452,101 +700,7 @@
   <!-- Scripts principais -->
   <script src="assets/js/script.js"></script>
   <script src="assets/js/rentabilidade.js"></script>
-  <script src="assets/js/how-it-works-animations.js"></script>
-
-  <!-- Widget de Métricas -->
-  <script>
-    (function () {
-      function animateCounter(el) {
-        const target = parseInt(el.dataset.target);
-        const duration = 1500;
-        const start = performance.now();
-        const startValue = 0;
-
-        function update(currentTime) {
-          const elapsed = currentTime - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const current = Math.floor(startValue + (target - startValue) * progress);
-          el.textContent = current;
-
-          if (progress < 1) {
-            requestAnimationFrame(update);
-          } else {
-            el.textContent = target;
-          }
-        }
-        requestAnimationFrame(update);
-      }
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const metrics = entry.target.querySelectorAll('.metric-value');
-            metrics.forEach(metric => {
-              if (!metric.dataset.animated) {
-                metric.dataset.animated = 'true';
-                animateCounter(metric);
-              }
-            });
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.3 });
-
-      const widget = document.querySelector('.metrics-widget');
-      if (widget) observer.observe(widget);
-    })();
-  </script>
-
-  <!-- Widget de Passos -->
-  <script>
-    (function () {
-      const steps = document.querySelectorAll('.step');
-      if (steps.length === 0) return;
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
-
-      steps.forEach((step, index) => {
-        setTimeout(() => {
-          observer.observe(step);
-        }, index * 100);
-      });
-    })();
-  </script>
-
-  <!-- Carrossel de Depoimentos -->
-  <script>
-    (function () {
-      const slides = document.querySelector('.slides');
-      const prevBtn = document.querySelector('.prev');
-      const nextBtn = document.querySelector('.next');
-      if (!slides || !prevBtn || !nextBtn) return;
-
-      let index = 0;
-      const total = slides.children.length;
-
-      function updateSlide() {
-        slides.style.transform = `translateX(-${index * 100}%)`;
-      }
-
-      prevBtn.addEventListener('click', () => {
-        index = index > 0 ? index - 1 : total - 1;
-        updateSlide();
-      });
-
-      nextBtn.addEventListener('click', () => {
-        index = index < total - 1 ? index + 1 : 0;
-        updateSlide();
-      });
-    })();
-  </script>
-
+  <script src="assets/js/animations.min.js"></script>
   <!-- Gráficos de Rentabilidade -->
   <script>
     (function () {
