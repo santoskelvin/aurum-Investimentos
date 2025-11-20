@@ -16,7 +16,8 @@ html {
   overflow-x: hidden;
   width: 100%;
   /* Garantir scroll vertical funciona normalmente */
-  overflow-y: scroll; /* scroll ao invés de auto para forçar scrollbar */
+  overflow-y: scroll;
+  /* scroll ao invés de auto para forçar scrollbar */
   height: 100%;
   /* Otimizações para iOS */
   -webkit-text-size-adjust: 100%;
@@ -28,7 +29,8 @@ body {
   margin: 0;
   padding: 0;
   /* Garantir scroll vertical funciona normalmente */
-  overflow-y: scroll; /* scroll ao invés de auto para forçar scrollbar */
+  overflow-y: scroll;
+  /* scroll ao invés de auto para forçar scrollbar */
   /* Prevenir problemas de scroll no iOS */
   -webkit-overflow-scrolling: touch;
   /* Otimização crítica para mobile */
@@ -1091,10 +1093,6 @@ section.hero {
     padding: 0 1rem;
   }
 
-  .passo-card {
-    padding: 1.5rem;
-  }
-
   .step-number {
     width: 36px;
     height: 36px;
@@ -1198,9 +1196,6 @@ section.hero {
     padding: 0 1rem;
   }
 
-  .passo-card {
-    padding: 1.5rem;
-  }
 }
 
 /* ============================================
@@ -2856,7 +2851,7 @@ section.hero {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     gap: 1.5rem;
-    padding: 0 1rem;
+    padding: 0 1rem 1rem 1rem;
     scrollbar-width: none;
     width: 100%;
     box-sizing: border-box;
@@ -2872,9 +2867,11 @@ section.hero {
   }
 
   .rentabilidade-grid .chart-card {
-    min-width: 90%;
+    min-width: 85%;
+    max-width: 85%;
     scroll-snap-align: center;
     flex-shrink: 0;
+    box-sizing: border-box;
   }
 
   .chart-card-highlight {
@@ -2886,7 +2883,14 @@ section.hero {
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
+    padding: 0 1rem;
+  }
+
+  .carousel-indicators {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
   }
 
   .chart-card {
@@ -3083,7 +3087,7 @@ section.hero {
   .back-to-top {
     display: none !important;
   }
-  
+
   /* Garantir que elementos fixed não interfiram com scroll */
   .site-header {
     position: sticky;
@@ -3091,7 +3095,7 @@ section.hero {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
-  
+
   /* Remover transforms problemáticos no mobile */
   * {
     -webkit-backface-visibility: hidden;

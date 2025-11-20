@@ -352,10 +352,18 @@
     const nextBtn = document.querySelector('.carousel-next');
     const indicators = document.querySelector('.carousel-indicators');
     
-    if (!container || window.innerWidth >= 768) return;
+    if (!container || !prevBtn || !nextBtn || !indicators) return;
+    if (window.innerWidth >= 768) return;
+    
+    // Prevenir múltiplas inicializações
+    if (container.dataset.carouselInitialized === 'true') return;
+    container.dataset.carouselInitialized = 'true';
     
     const cards = container.querySelectorAll('.chart-card');
     let currentIndex = 0;
+    
+    // Limpar indicadores existentes antes de criar novos
+    indicators.innerHTML = '';
     
     // Criar indicators
     cards.forEach((_, index) => {
@@ -463,12 +471,26 @@
     
     // Re-inicializar carousel no resize
     let resizeTimer;
+    let lastWidth = window.innerWidth;
+    
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
-        if (window.innerWidth < 768) {
-          initCarousel();
+        const currentWidth = window.innerWidth;
+        
+        // Só reinicializar se mudar de desktop para mobile ou vice-versa
+        if ((lastWidth >= 768 && currentWidth < 768) || (lastWidth < 768 && currentWidth >= 768)) {
+          const container = document.getElementById('rentabilidade-container');
+          if (container) {
+            container.dataset.carouselInitialized = 'false';
+          }
+          
+          if (currentWidth < 768) {
+            initCarousel();
+          }
         }
+        
+        lastWidth = currentWidth;
       }, 250);
     });
   }
