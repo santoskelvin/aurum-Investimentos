@@ -15,13 +15,11 @@
 html {
   overflow-x: hidden;
   width: 100%;
-  /* Garantir scroll vertical funciona normalmente */
   overflow-y: scroll;
-  /* scroll ao invés de auto para forçar scrollbar */
   height: 100%;
-  /* Otimizações para iOS */
+  font-size: 16px;
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  /* Permitir pull-to-refresh no mobile */
 }
 
 body {
@@ -29,15 +27,10 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  /* Garantir scroll vertical funciona normalmente */
   overflow-y: scroll;
-  /* scroll ao invés de auto para forçar scrollbar */
-  /* Prevenir problemas de scroll no iOS */
   -webkit-overflow-scrolling: touch;
-  /* Otimização crítica para mobile */
   min-height: 100vh;
   min-height: -webkit-fill-available;
-  /* Permitir pull-to-refresh no mobile */
 }
 
 img,
@@ -46,7 +39,6 @@ video {
   max-width: 100%;
   height: auto;
 }
-
 
 /* ============================================
    2. DESIGN TOKENS
@@ -96,16 +88,6 @@ select {
 /* Seções devem permitir scroll sem interferência - não aplicar touch-action globalmente */
 /* Aplicar apenas onde necessário para não bloquear eventos de mouse */
 
-/* Garantir que body e html permitam scroll com mouse e touch */
-html,
-body {
-  /* Permitir scroll com mouse wheel e touch */
-  /* Removido overscroll-behavior para permitir pull-to-refresh no mobile */
-  /* Garantir que scroll funcione com mouse */
-  -webkit-overflow-scrolling: touch;
-  /* Não aplicar touch-action aqui para não bloquear mouse wheel */
-}
-
 /* Acessibilidade: Respeitar preferência de movimento reduzido */
 @media (prefers-reduced-motion: reduce) {
 
@@ -116,11 +98,6 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
 }
 
 /* ============================================

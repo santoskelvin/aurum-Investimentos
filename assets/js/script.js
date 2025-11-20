@@ -1,5 +1,3 @@
-
-
 const qs = (sel, ctx = document) => ctx.querySelector(sel);
 const qsa = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
@@ -414,14 +412,11 @@ function initFAQAccordion() {
 
     // Initialize heights for existing state
     const isOpen = item.classList.contains('open');
-    if (isOpen) {
-      const panel = item.querySelector('dd');
-      if (panel) {
-        panel.style.maxHeight = 'none';
-        const height = panel.scrollHeight;
-        panel.style.maxHeight = `${height}px`;
-        panel.style.opacity = '1';
-      }
+    if (isOpen && panel) {
+      panel.style.maxHeight = 'none';
+      const height = panel.scrollHeight;
+      panel.style.maxHeight = `${height}px`;
+      panel.style.opacity = '1';
     }
 
     trigger.addEventListener('click', () => {
@@ -1008,5 +1003,3 @@ if (window.innerWidth <= 768) {
   };
   window.addEventListener('scroll', scrollHandler, { passive: true });
 }
-
-
