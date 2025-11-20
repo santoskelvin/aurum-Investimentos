@@ -44,8 +44,8 @@ function initFadeInObserver() {
   }
   
   const observerOptions = {
-    threshold: 0.2,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.1,
+    rootMargin: '0px 0px 100px 0px' // Disparar 100px antes para animação mais fluida
   };
   
   const observer = new IntersectionObserver((entries) => {
@@ -537,54 +537,9 @@ function initMicroCalculator() {
 }
 
 // ============================================
-// PLANOS ANIMATION (Stagger Effect)
+// PLANOS ANIMATION
 // ============================================
-
-function initPlanosAnimation() {
-  const planosSection = qs('.planos-section');
-  const planosHeader = qs('.planos-header');
-  const planoCards = qsa('.plano-card');
-  
-  if (!planosSection || planoCards.length === 0) {
-    return;
-  }
-  
-  // Respeitar preferência de movimento reduzido
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    planosHeader?.classList.add('animate-in');
-    planoCards.forEach(card => card.classList.add('animate-in'));
-    return;
-  }
-  
-  const observerOptions = {
-    threshold: 0.05,
-    rootMargin: '0px 0px 200px 0px' // Disparar 200px antes da seção entrar na viewport
-  };
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // Animar header primeiro
-        if (planosHeader) {
-          setTimeout(() => {
-            planosHeader.classList.add('animate-in');
-          }, 100);
-        }
-        
-        // Animar cards com stagger (um após o outro)
-        planoCards.forEach((card, index) => {
-          setTimeout(() => {
-            card.classList.add('animate-in');
-          }, 300 + (index * 150)); // 300ms delay inicial + 150ms entre cada card
-        });
-        
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-  
-  observer.observe(planosSection);
-}
+// Removida função específica - seção usa fade-up padrão do initFadeInObserver
 
 // ============================================
 // AURUM PATRIMONIAL ANIMATION (Stagger Effect)
@@ -974,7 +929,7 @@ function init() {
   initFAQAccordion();
   initMicroCalculator();
   initBackToTop();
-  initPlanosAnimation();
+  // initPlanosAnimation(); // Removido - usa fade-up padrão
   initAurumPatrimonialAnimation();
   initFAQAnimation();
   initFinalCTAAnimation();
