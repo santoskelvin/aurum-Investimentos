@@ -2851,9 +2851,10 @@ section.hero {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     gap: 1.5rem;
-    padding: 0 1rem 1rem 1rem;
+    padding: 0 0 1rem 0;
     scrollbar-width: none;
     width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
     /* Permitir que o touch passe para o scroll da página */
     touch-action: pan-x;
@@ -2867,9 +2868,9 @@ section.hero {
   }
 
   .rentabilidade-grid .chart-card {
-    min-width: 85%;
-    max-width: 85%;
-    scroll-snap-align: center;
+    min-width: calc(100vw - 48px);
+    max-width: calc(100vw - 48px);
+    scroll-snap-align: start;
     flex-shrink: 0;
     box-sizing: border-box;
   }
