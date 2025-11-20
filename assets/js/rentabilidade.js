@@ -386,19 +386,31 @@
       scrollToCard(currentIndex + 1);
     });
     
-    // Swipe touch
+    // Swipe touch - versão melhorada que não bloqueia scroll da página
     let startX = 0;
+    let startY = 0;
     let isDragging = false;
     
     container.addEventListener('touchstart', (e) => {
       startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
       isDragging = true;
-    });
+    }, { passive: true });
     
     container.addEventListener('touchmove', (e) => {
       if (!isDragging) return;
-      e.preventDefault();
-    });
+      
+      // Calcular direção do movimento
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = Math.abs(currentX - startX);
+      const diffY = Math.abs(currentY - startY);
+      
+      // Apenas prevenir scroll se o movimento for predominantemente horizontal
+      if (diffX > diffY && diffX > 10) {
+        e.preventDefault();
+      }
+    }, { passive: false });
     
     container.addEventListener('touchend', (e) => {
       if (!isDragging) return;
@@ -413,7 +425,7 @@
           scrollToCard(currentIndex - 1);
         }
       }
-    });
+    }, { passive: true });
     
     // Scroll snap detection
     container.addEventListener('scroll', () => {

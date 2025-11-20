@@ -181,16 +181,24 @@ function initMobileNav() {
       navToggle.setAttribute('aria-expanded', 'false');
       navToggle.setAttribute('aria-label', 'Abrir menu');
     }
-    // Prevenir scroll do body quando menu está fechado
+    // Restaurar scroll do body quando menu está fechado
     document.body.style.overflow = '';
-    document.body.style.overflowX = 'hidden';
-    document.documentElement.style.overflowX = 'hidden';
-    // Garantir que não há scroll horizontal
-    window.scrollTo(0, window.scrollY);
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    
+    // Restaurar posição do scroll se foi salva
+    const scrollY = document.body.style.top;
+    if (scrollY) {
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
   }
   
   // Função para abrir o menu
   function openMenu() {
+    // Salvar posição atual do scroll
+    const scrollY = window.scrollY;
+    
     mainNav.classList.add('open');
     if (navOverlay) {
       navOverlay.classList.add('active');
@@ -199,10 +207,12 @@ function initMobileNav() {
       navToggle.setAttribute('aria-expanded', 'true');
       navToggle.setAttribute('aria-label', 'Fechar menu');
     }
-    // Prevenir scroll do body quando menu está aberto
+    
+    // Prevenir scroll do body quando menu está aberto (técnica melhorada)
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
     document.body.style.overflow = 'hidden';
-    document.body.style.overflowX = 'hidden';
-    document.documentElement.style.overflowX = 'hidden';
   }
   
   // Toggle do botão hamburger
@@ -610,27 +620,12 @@ function checkAndCompleteVisibleAnimations() {
 
 // Prevenir scroll horizontal
 function preventHorizontalScroll() {
-  // Garantir que não há scroll horizontal
+  // Garantir que não há scroll horizontal (apenas no CSS, não forçar via JS)
   document.documentElement.style.overflowX = 'hidden';
   document.body.style.overflowX = 'hidden';
   
-  // Verificar e corrigir elementos que possam estar causando overflow
-  const allElements = document.querySelectorAll('*');
-  allElements.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (rect.width > window.innerWidth && !el.classList.contains('hero-bg-image')) {
-      el.style.maxWidth = '100vw';
-      el.style.overflowX = 'hidden';
-    }
-  });
-  
-  // Verificar periodicamente
-  setInterval(() => {
-    if (document.documentElement.scrollWidth > document.documentElement.clientWidth) {
-      document.documentElement.style.overflowX = 'hidden';
-      document.body.style.overflowX = 'hidden';
-    }
-  }, 100);
+  // Remover a verificação periódica que estava causando problemas
+  // A propriedade overflow-x: hidden no CSS é suficiente
 }
 
 function init() {
