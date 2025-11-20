@@ -408,13 +408,16 @@
     container.addEventListener('touchmove', (e) => {
       if (!isDragging) return;
       
+      // Verificar se é evento touch (não mouse)
+      if (!e.touches || e.touches.length === 0) return;
+      
       // Calcular direção do movimento
       const currentX = e.touches[0].clientX;
       const currentY = e.touches[0].clientY;
       const diffX = Math.abs(currentX - startX);
       const diffY = Math.abs(currentY - startY);
       
-      // Apenas prevenir scroll se o movimento for predominantemente horizontal
+      // Apenas prevenir scroll se o movimento for predominantemente horizontal E for touch
       if (diffX > diffY && diffX > 10) {
         e.preventDefault();
       }

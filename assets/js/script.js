@@ -446,46 +446,93 @@ function initMicroCalculator() {
   const form = qs('[data-microcalc]');
   if (!form) return;
 
-  const input = form.querySelector('input[type="number"]');
+  const aporteInicialInput = form.querySelector('#micro-aporte-inicial');
+  const aporteMensalInput = form.querySelector('#micro-aporte');
   const annualField = form.querySelector('[data-micro-annual]');
   const incomeField = form.querySelector('[data-micro-income]');
 
-  if (!input || !annualField || !incomeField) {
+  if (!aporteInicialInput || !aporteMensalInput || !annualField || !incomeField) {
     return;
   }
 
-  const MULTIPLICADOR = 2.8;
-  const RENTABILIDADE = 0.18;
+  // Premissas fixas conforme especificação
+  const TAXA_JUROS_MENSAL = 0.009; // 0,9% ao mês
+  const PRAZO_MESES = 12;
+  const TAXA_SAQUE_MENSAL = 0.004; // 0,4% ao mês
+
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
     maximumFractionDigits: 2
   });
 
-  function clampValue(value) {
-    const numeric = Number(value);
-    if (Number.isNaN(numeric)) return 0;
-    return Math.min(20000, Math.max(200, numeric));
+  function calcularPatrimonioProjetado(valorAporteInicial, aporteMensal) {
+    // Fórmula: Patrimônio_Final = PV * (1 + i)^n + PMT * [((1 + i)^n - 1) / i]
+    // Onde:
+    // PV = valor_aporte_inicial
+    // i = taxa_juros_mensal
+    // n = prazo_meses
+    // PMT = aporte_mensal
+
+    const PV = valorAporteInicial;
+    const i = TAXA_JUROS_MENSAL;
+    const n = PRAZO_MESES;
+    const PMT = aporteMensal;
+
+    // Calcular (1 + i)^n
+    const fatorCrescimento = Math.pow(1 + i, n);
+
+    // Primeira parte: PV * (1 + i)^n
+    const valorInicialCrescido = PV * fatorCrescimento;
+
+    // Segunda parte: PMT * [((1 + i)^n - 1) / i]
+    const valorAportesCrescido = PMT * ((fatorCrescimento - 1) / i);
+
+    // Patrimônio final
+    const patrimonioFinal = valorInicialCrescido + valorAportesCrescido;
+
+    return patrimonioFinal;
+  }
+
+  function calcularRendaMensal(patrimonioProjetado) {
+    // Renda_Mensal_Estimada = Patrimônio_Final * taxa_saque_mensal
+    return patrimonioProjetado * TAXA_SAQUE_MENSAL;
   }
 
   function updateResults() {
-    const aporteMensal = clampValue(input.value || input.getAttribute('value') || 0);
-    input.value = aporteMensal;
+    // Obter valores dos inputs
+    const valorAporteInicial = Number(aporteInicialInput.value) || 0;
+    const aporteMensal = Number(aporteMensalInput.value) || 0;
 
-    const patrimonio = aporteMensal * MULTIPLICADOR * 12;
-    const rendaMensal = (patrimonio * RENTABILIDADE) / 12;
+    // Validar valores mínimos
+    if (valorAporteInicial < 0 || aporteMensal < 0) {
+      annualField.textContent = currencyFormatter.format(0);
+      incomeField.textContent = currencyFormatter.format(0);
+      return;
+    }
 
-    annualField.textContent = currencyFormatter.format(patrimonio);
+    // Calcular patrimônio projetado em 12 meses
+    const patrimonioProjetado = calcularPatrimonioProjetado(valorAporteInicial, aporteMensal);
+
+    // Calcular renda mensal estimada
+    const rendaMensal = calcularRendaMensal(patrimonioProjetado);
+
+    // Atualizar campos de resultado
+    annualField.textContent = currencyFormatter.format(patrimonioProjetado);
     incomeField.textContent = currencyFormatter.format(rendaMensal);
   }
 
-  input.addEventListener('input', updateResults);
+  // Atualizar resultados em tempo real durante digitação
+  aporteInicialInput.addEventListener('input', updateResults);
+  aporteMensalInput.addEventListener('input', updateResults);
 
+  // Validar no submit
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     updateResults();
   });
 
+  // Inicializar com valores padrão
   updateResults();
 }
 
@@ -537,6 +584,215 @@ function initPlanosAnimation() {
   }, observerOptions);
   
   observer.observe(planosSection);
+}
+
+// ============================================
+// AURUM PATRIMONIAL ANIMATION (Stagger Effect)
+// ============================================
+
+function initAurumPatrimonialAnimation() {
+  const aurumSection = qs('.aurum-patrimonial');
+  const aurumHeader = qs('.aurum-patrimonial-header');
+  const aurumCards = qsa('.aurum-card');
+  
+  if (!aurumSection || aurumCards.length === 0) {
+    return;
+  }
+  
+  // Respeitar preferência de movimento reduzido
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    aurumHeader?.classList.add('animate-in');
+    aurumCards.forEach(card => card.classList.add('animate-in'));
+    return;
+  }
+  
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -100px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Animar header primeiro
+        if (aurumHeader) {
+          setTimeout(() => {
+            aurumHeader.classList.add('animate-in');
+          }, 100);
+        }
+        
+        // Animar cards com stagger (um após o outro)
+        aurumCards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add('animate-in');
+          }, 300 + (index * 150)); // 300ms delay inicial + 150ms entre cada card
+        });
+        
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  
+  observer.observe(aurumSection);
+}
+
+// ============================================
+// FAQ ANIMATION
+// ============================================
+
+function initFAQAnimation() {
+  const faqSection = qs('.faq-section');
+  const faqIntro = qs('.faq-intro');
+  const faqAccordion = qs('.faq-accordion');
+  const faqItems = qsa('.faq-item');
+  
+  if (!faqSection) {
+    return;
+  }
+  
+  // Respeitar preferência de movimento reduzido
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    faqIntro?.classList.add('animate-in');
+    faqAccordion?.classList.add('animate-in');
+    faqItems.forEach(item => item.classList.add('animate-in'));
+    return;
+  }
+  
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -100px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Animar intro primeiro
+        if (faqIntro) {
+          setTimeout(() => {
+            faqIntro.classList.add('animate-in');
+          }, 100);
+        }
+        
+        // Animar accordion
+        if (faqAccordion) {
+          setTimeout(() => {
+            faqAccordion.classList.add('animate-in');
+          }, 300);
+        }
+        
+        // Animar items com stagger
+        faqItems.forEach((item, index) => {
+          setTimeout(() => {
+            item.classList.add('animate-in');
+          }, 500 + (index * 80)); // 500ms delay inicial + 80ms entre cada item
+        });
+        
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  
+  observer.observe(faqSection);
+}
+
+// ============================================
+// FINAL CTA ANIMATION
+// ============================================
+
+function initFinalCTAAnimation() {
+  const ctaSection = qs('.final-cta');
+  const ctaTitle = qs('.cta-title');
+  const ctaBtn = qs('.btn-cta');
+  
+  if (!ctaSection) {
+    return;
+  }
+  
+  // Respeitar preferência de movimento reduzido
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    ctaTitle?.classList.add('animate-in');
+    ctaBtn?.classList.add('animate-in');
+    return;
+  }
+  
+  const observerOptions = {
+    threshold: 0.2,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Animar título primeiro
+        if (ctaTitle) {
+          setTimeout(() => {
+            ctaTitle.classList.add('animate-in');
+          }, 100);
+        }
+        
+        // Animar botão depois
+        if (ctaBtn) {
+          setTimeout(() => {
+            ctaBtn.classList.add('animate-in');
+          }, 400);
+        }
+        
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  
+  observer.observe(ctaSection);
+}
+
+// ============================================
+// FOOTER ANIMATION
+// ============================================
+
+function initFooterAnimation() {
+  const footer = qs('.site-footer');
+  const footerContent = qs('.footer-content');
+  const footerBottom = qs('.footer-bottom');
+  
+  if (!footer) {
+    return;
+  }
+  
+  // Respeitar preferência de movimento reduzido
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    footerContent?.classList.add('animate-in');
+    footerBottom?.classList.add('animate-in');
+    return;
+  }
+  
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Animar conteúdo primeiro
+        if (footerContent) {
+          setTimeout(() => {
+            footerContent.classList.add('animate-in');
+          }, 100);
+        }
+        
+        // Animar bottom depois
+        if (footerBottom) {
+          setTimeout(() => {
+            footerBottom.classList.add('animate-in');
+          }, 400);
+        }
+        
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  
+  observer.observe(footer);
 }
 
 // ============================================
@@ -689,8 +945,26 @@ function preventHorizontalScroll() {
   // A propriedade overflow-x: hidden no CSS é suficiente
 }
 
+// Garantir que scroll com mouse wheel funcione
+function ensureMouseWheelScroll() {
+  // Adicionar listener para garantir que wheel events não sejam bloqueados
+  document.addEventListener('wheel', (e) => {
+    // Não fazer nada, apenas garantir que o evento não seja bloqueado
+    // O navegador vai processar o scroll normalmente
+  }, { passive: true });
+  
+  // Também garantir para elementos específicos que podem ter problemas
+  const scrollableElements = document.querySelectorAll('section, main, article, .container');
+  scrollableElements.forEach(el => {
+    el.addEventListener('wheel', (e) => {
+      // Permitir scroll com mouse wheel
+    }, { passive: true });
+  });
+}
+
 function init() {
   preventHorizontalScroll();
+  ensureMouseWheelScroll();
   initSmoothScroll();
   initFadeInObserver();
   initHeaderBehavior();
@@ -701,6 +975,10 @@ function init() {
   initMicroCalculator();
   initBackToTop();
   initPlanosAnimation();
+  initAurumPatrimonialAnimation();
+  initFAQAnimation();
+  initFinalCTAAnimation();
+  initFooterAnimation();
   
   // Verificar e completar animações se elementos já estão visíveis
   checkAndCompleteVisibleAnimations();

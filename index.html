@@ -100,7 +100,7 @@
         </div>
         <div class="hero-metrics hero-animate-item" data-animate-delay="0.7">
           <div class="hero-metric-item">
-            <span class="hero-metric-value" data-target="1500" data-prefix="+">0</span>
+            <span class="hero-metric-value" data-target="15500" data-prefix="+">0</span>
             <span class="hero-metric-label">clientes atendidos</span>
           </div>
           <div class="hero-metric-item">
@@ -329,11 +329,19 @@
       </div>
       <form class="micro-calc-card" data-microcalc>
         <div class="micro-input-group">
+          <label for="micro-aporte-inicial">Aporte inicial (R$)</label>
+          <div class="micro-input-wrap">
+            <span>R$</span>
+            <input type="number" id="micro-aporte-inicial" name="micro-aporte-inicial" min="0" step="1000" value="50000"
+              required>
+          </div>
+        </div>
+
+        <div class="micro-input-group">
           <label for="micro-aporte">Aporte mensal (R$)</label>
           <div class="micro-input-wrap">
             <span>R$</span>
-            <input type="number" id="micro-aporte" name="micro-aporte" min="200" max="20000" step="100" value="1800"
-              required>
+            <input type="number" id="micro-aporte" name="micro-aporte" min="0" step="100" value="2000" required>
           </div>
         </div>
 
@@ -686,7 +694,7 @@
   <!-- Back to Top Button -->
   <button id="back-to-top" class="back-to-top" aria-label="Voltar ao topo" title="Voltar ao topo">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 5V15M10 5L5 10M10 5L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      <path d="M10 15V5M10 5L5 10M10 5L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
         stroke-linejoin="round" />
     </svg>
   </button>

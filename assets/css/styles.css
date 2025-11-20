@@ -21,6 +21,8 @@ html {
   height: 100%;
   /* Otimizações para iOS */
   -webkit-text-size-adjust: 100%;
+  /* Permitir scroll com mouse wheel */
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -36,6 +38,8 @@ body {
   /* Otimização crítica para mobile */
   min-height: 100vh;
   min-height: -webkit-fill-available;
+  /* Permitir scroll com mouse wheel */
+  overscroll-behavior-y: none;
 }
 
 img,
@@ -78,8 +82,6 @@ video {
 
 /* Garantir que elementos não bloqueiem scroll touch */
 * {
-  /* Permitir apenas scroll, sem zoom */
-  touch-action: pan-y;
   /* Prevenir tap highlight no iOS */
   -webkit-tap-highlight-color: transparent;
 }
@@ -93,12 +95,17 @@ select {
   touch-action: manipulation;
 }
 
-/* Seções devem permitir scroll sem interferência */
-section,
-main,
-article,
-div {
-  touch-action: pan-y;
+/* Seções devem permitir scroll sem interferência - não aplicar touch-action globalmente */
+/* Aplicar apenas onde necessário para não bloquear eventos de mouse */
+
+/* Garantir que body e html permitam scroll com mouse e touch */
+html,
+body {
+  /* Permitir scroll com mouse wheel e touch */
+  overscroll-behavior: none;
+  /* Garantir que scroll funcione com mouse */
+  -webkit-overflow-scrolling: touch;
+  /* Não aplicar touch-action aqui para não bloquear mouse wheel */
 }
 
 /* Acessibilidade: Respeitar preferência de movimento reduzido */
@@ -1125,6 +1132,15 @@ section.hero {
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+  /* Animação inicial */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.aurum-patrimonial-header.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .aurum-patrimonial-label {
@@ -1190,9 +1206,22 @@ section.hero {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 1;
+  /* Animação inicial */
+  opacity: 0;
   visibility: visible;
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aurum-card.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.aurum-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .aurum-card-icon {
@@ -1929,7 +1958,7 @@ section.hero {
   opacity: 0;
   transform: translateY(30px) scale(0.95);
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .plano-card.animate-in {
@@ -1941,7 +1970,7 @@ section.hero {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 25px 55px rgba(0, 0, 0, 0.45);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .plano-card-destaque:hover {
@@ -1958,9 +1987,12 @@ section.hero {
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 30px 55px rgba(0, 0, 0, 0.45), 0 0 35px rgba(212, 175, 55, 0.3);
   }
+
   50% {
     box-shadow: 0 30px 55px rgba(0, 0, 0, 0.45), 0 0 45px rgba(212, 175, 55, 0.4);
   }
@@ -2036,6 +2068,15 @@ section.hero {
 .faq-intro {
   color: var(--color-light);
   padding-right: 1rem;
+  /* Animação inicial */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.faq-intro.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .faq-label {
@@ -2068,10 +2109,28 @@ section.hero {
   border: 1px solid rgba(255, 255, 255, 0.07);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
   padding: 1rem;
+  /* Animação inicial */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.faq-accordion.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .faq-item {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  /* Animação inicial */
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.faq-item.animate-in {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .faq-item:last-child {
@@ -2465,6 +2524,27 @@ section.hero {
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  /* Animação inicial */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.cta-title.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-cta {
+  /* Animação inicial */
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+}
+
+.btn-cta.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 /* ============================================
@@ -2625,8 +2705,8 @@ section.hero {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    /* Permitir que o touch passe para o scroll da página */
-    touch-action: pan-x;
+    /* Permitir scroll horizontal no carousel, mas não bloquear scroll vertical da página */
+    touch-action: pan-x pan-y;
     /* Otimização crítica para iOS */
     position: relative;
     z-index: 1;
@@ -2709,6 +2789,15 @@ section.hero {
   grid-template-columns: 1fr 1fr;
   gap: var(--space-xl);
   margin-bottom: var(--space-lg);
+  /* Animação inicial */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.footer-content.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .footer-brand {
@@ -2789,6 +2878,15 @@ section.hero {
   padding-top: var(--space-md);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   text-align: center;
+  /* Animação inicial */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+}
+
+.footer-bottom.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .footer-copyright {
@@ -2819,6 +2917,10 @@ section.hero {
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
+  /* Garantir que não interfira com scroll */
+  touch-action: manipulation;
+  /* Melhorar área de toque no mobile */
+  -webkit-tap-highlight-color: transparent;
 }
 
 .back-to-top.visible {
@@ -2834,12 +2936,13 @@ section.hero {
 }
 
 .back-to-top:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.95);
 }
 
 .back-to-top svg {
   width: 20px;
   height: 20px;
+  pointer-events: none;
 }
 
 /* Responsive: Footer */
@@ -2855,7 +2958,24 @@ section.hero {
   }
 
   .back-to-top {
-    display: none !important;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 50px;
+    height: 50px;
+    /* Garantir que apareça no mobile */
+    display: flex;
+    /* Área de toque maior no mobile */
+    min-width: 50px;
+    min-height: 50px;
+  }
+
+  .back-to-top.visible {
+    display: flex;
+  }
+
+  .back-to-top svg {
+    width: 22px;
+    height: 22px;
   }
 
   /* Garantir que elementos fixed não interfiram com scroll */
